@@ -38,7 +38,102 @@ selected = option_menu(None, ["Home", "Design & Modeling", "Simulation"],
     icons=['house', 'graph-up', 'caret-right-square-fill'], 
     menu_icon="cast", default_index=0, orientation="horizontal")
 
+with st.sidebar:
+    sidebar = option_menu(None, ['Settings'], 
+        icons=['sliders'], menu_icon="cast", default_index=0)
+    
+    M_ben = 78.11
+    M_tol = 92.14
+    alpha = st.text_input("Relative volatility (α)", 2.354)
+    alpha = float(alpha)
+    q = st.number_input("Fraction of liquid in the feed stream (q)", value= 1.0)
+    q = float(q)
+    if q==1:
+        q=0.9999999999
+    F = st.text_input("Feed (Kmol/h)", 10.0)
+    F = float(F)
+    
+    liste = ['Mole', 'Mass']
+    Frac = st.radio('Fraction', liste, index=1)
+    st.write('<style>div.row-widget.stRadio > div{flex-direction:row;}</style>', unsafe_allow_html=True)
+    
+    if Frac == 'Mole':
+        X_F = st.slider("Fraction of the most volatile component in the feed (XF)",min_value=0.0, max_value=100.0, step=0.1, value=40.0)
+        X_F = X_F/100
+        X_F_mass = X_F*M_ben/(X_F*M_ben + (1-X_F)*M_tol)
+        
+        X_D = st.slider("Fraction of the most volatile component in the distillate (XD)",min_value=0.0, max_value=100.0, step=0.1, value=99.2)
+        X_D = X_D/100
+        X_D_mass = X_D*M_ben/(X_D*M_ben + (1-X_D)*M_tol)
+        
+        X_W = st.slider("Fraction of the most volatile component in the bottom (XB)",min_value=0.0, max_value=100.0, step=0.1, value=01.4)
+        X_W = X_W/100
+        X_W_mass = X_W*M_ben/(X_W*M_ben + (1-X_W)*M_tol)
+        
+    else:
+        X_F_mass = st.slider("Fraction of the most volatile component in the feed (XF)",min_value=0.0, max_value=100.0, step=0.1, value=36.108542899408286)
+        X_F_mass = X_F_mass/100
+        X_F = X_F_mass/M_ben/(X_F_mass/M_ben + (1-X_F_mass)/M_tol)
+        
+        X_D_mass = st.slider("Fraction of the most volatile component in the distillate (XD)",min_value=0.0, max_value=100.0, step=0.1, value=99.05765930507743)
+        X_D_mass = X_D_mass/100
+        X_D = X_D_mass/M_ben/(X_D_mass/M_ben + (1-X_D_mass)/M_tol)
+        
+        X_W_mass = st.slider("Fraction of the most volatile component in the bottom (XB)",min_value=0.0, max_value=100.0, step=0.1, value=01.1893598226216556)
+        X_W_mass = X_W_mass/100
+        X_W = X_W_mass/M_ben/(X_W_mass/M_ben + (1-X_W_mass)/M_tol)
+        
+    F_mass = X_F*F*M_ben + (1-X_F)*F*M_tol
 
+# if sidebar == 'Settings':
+        
+#     with st.sidebar.form("my_form"):
+#         #st.write("Définition des paramètres")
+#         M_ben = 78.11
+#         M_tol = 92.14
+#         alpha = st.text_input("Relative volatility (α)", 2.354)
+#         alpha = float(alpha)
+#         q = st.number_input("Fraction of liquid in the feed stream (q)", value= 1.0)
+#         q = float(q)
+#         if q==1:
+#             q=0.9999999999
+#         F = st.text_input("Feed (Kmol/h)", 10.0)
+#         F = float(F)
+        
+        # liste = ['Mole', 'Mass']
+        # Frac = st.radio('Fraction', liste, index=0)
+        # st.write('<style>div.row-widget.stRadio > div{flex-direction:row;}</style>', unsafe_allow_html=True)
+        
+        # if Frac == 'Mole':
+        #     X_F = st.slider("Fraction of the most volatile component in the feed (XF)",min_value=0.0, max_value=100.0, step=0.1, value=40.0)
+        #     X_F = X_F/100
+        #     X_F_mass = X_F*M_ben/(X_F*M_ben + (1-X_F)*M_tol)
+            
+        #     X_D = st.slider("Fraction of the most volatile component in the distillate (XD)",min_value=0.0, max_value=100.0, step=0.1, value=99.2)
+        #     X_D = X_D/100
+        #     X_D_mass = X_D*M_ben/(X_D*M_ben + (1-X_D)*M_tol)
+            
+        #     X_W = st.slider("Fraction of the most volatile component in the bottom (XB)",min_value=0.0, max_value=100.0, step=0.1, value=01.4)
+        #     X_W = X_W/100
+        #     X_W_mass = X_W*M_ben/(X_W*M_ben + (1-X_W)*M_tol)
+            
+        # else:
+        #     X_F_mass = st.slider("Fraction of the most volatile component in the feed (XF)",min_value=0.0, max_value=100.0, step=0.1, value=36.108542899408286)
+        #     X_F_mass = X_F_mass/100
+        #     X_F = 0.4
+            
+        #     X_D_mass = st.slider("Fraction of the most volatile component in the distillate (XD)",min_value=0.0, max_value=100.0, step=0.1, value=99.05765930507743)
+        #     X_D_mass = X_D_mass/100
+        #     X_D = 0.992
+            
+        #     X_W_mass = st.slider("Fraction of the most volatile component in the bottom (XB)",min_value=0.0, max_value=100.0, step=0.1, value=01.1893598226216556)
+        #     X_W_mass = X_W_mass/100
+        #     X_W = 0.014
+        
+        # F_mass = X_F*F*M_ben + (1-X_F)*F*M_tol
+
+        # # Every form must have a submit button.
+        # submitted = st.form_submit_button("Run")
 
 
 # =============================================================================
@@ -90,34 +185,34 @@ elif selected == "Design & Modeling":
     #         icons=['sliders'], menu_icon="cast", default_index=0)
     
     # if sidebar == 'Settings':
-    with st.sidebar.form("my_form"):
-        #st.write("Définition des paramètres")
-        M_ben = 78.11
-        M_tol = 92.14
-        alpha = st.text_input("Relative volatility (α)", 2.354)
-        alpha = float(alpha)
-        q = st.number_input("Fraction of liquid in the feed stream (q)", value= 1.0)
-        q = float(q)
-        if q==1:
-            q=0.9999999999
-        F = st.text_input("Feed (Kmol/h)", 10.0)
-        F = float(F)
-        X_F = st.slider("Mole fraction of the most volatile component in the feed (XF)",min_value=0.0, max_value=100.0, step=0.1, value=40.0)
-        X_F = X_F/100
-        X_F_mass = X_F*M_ben/(X_F*M_ben + (1-X_F)*M_tol)
-        
-        X_D = st.slider("Mole fraction of the most volatile component in the distillate (XD)",min_value=0.0, max_value=100.0, step=0.1, value=99.2)
-        X_D = X_D/100
-        X_D_mass = X_D*M_ben/(X_D*M_ben + (1-X_D)*M_tol)
-        
-        X_W = st.slider("Mole fraction of the most volatile component in the bottom (XB)",min_value=0.0, max_value=100.0, step=0.1, value=01.4)
-        X_W = X_W/100
-        X_W_mass = X_W*M_ben/(X_W*M_ben + (1-X_W)*M_tol)
-        
-        F_mass = X_F*F*M_ben + (1-X_F)*F*M_tol
-
-        # Every form must have a submit button.
-        submitted = st.form_submit_button("Run")
+    #     with st.sidebar.form("my_form"):
+    #         #st.write("Définition des paramètres")
+    #         M_ben = 78.11
+    #         M_tol = 92.14
+    #         alpha = st.text_input("Relative volatility (α)", 2.0)
+    #         alpha = float(alpha)
+    #         q = st.number_input("Fraction of liquid in the feed stream (q)", value= 0.0)
+    #         q = float(q)
+    #         if q==1:
+    #             q=0.9999999999
+    #         F = st.text_input("Feed (Kmol/h)", 10.0)
+    #         F = float(F)
+    #         X_F = st.slider("Mole fraction of the most volatile component in the feed (XF)",min_value=0.0, max_value=100.0, step=0.1, value=40.0)
+    #         X_F = X_F/100
+    #         X_F_mass = X_F*M_ben/(X_F*M_ben + (1-X_F)*M_tol)
+            
+    #         X_D = st.slider("Mole fraction of the most volatile component in the distillate (XD)",min_value=0.0, max_value=100.0, step=0.1, value=99.2)
+    #         X_D = X_D/100
+    #         X_D_mass = X_D*M_ben/(X_D*M_ben + (1-X_D)*M_tol)
+            
+    #         X_W = st.slider("Mole fraction of the most volatile component in the bottom (XB)",min_value=0.0, max_value=100.0, step=0.1, value=01.4)
+    #         X_W = X_W/100
+    #         X_W_mass = X_W*M_ben/(X_W*M_ben + (1-X_W)*M_tol)
+            
+    #         F_mass = X_F*F*M_ben + (1-X_F)*F*M_tol
+    
+    #         # Every form must have a submit button.
+    #         submitted = st.form_submit_button("Run")
     
     def equi(alpha):
         x_eq = np.linspace(0, 1, 101)
@@ -301,8 +396,12 @@ elif selected == "Design & Modeling":
     st.pyplot()
     
     Stages_min = s_rows -1
-    #st.write("Le nombre des étages theoriques minimal pour réaliser cette séparation est:", étages_min,"étages")
-    st.write(r''' $$\hspace*{5.4cm} N_{min} =$$''', Stages_min)
+    
+    col_N = st.columns(3)
+    with col_N[1]:
+        st.write(r''' $$N_{min} =$$''', Stages_min)
+        
+    # st.write(r''' $$\hspace*{5.4cm} N_{min} =$$''', Stages_min)
     st.write("The Minimum Number of Trays is", Stages_min,"stages.")
     
     
@@ -316,14 +415,20 @@ elif selected == "Design & Modeling":
     
     def phi(X):
         return (alpha*X_F)/(alpha-X) + (1-X_F)/(1-X) +q -1
-    phi_ = fsolve(phi, 2)
+    phi_ = fsolve(phi, 1.66)
     R_min_cal = (alpha*X_D)/(alpha-phi_) + (1-X_D)/(1-phi_) -1
     R_min_cal = R_min_cal[0]
     
     st.write(r'### <p style="text-align: center;">$$ 1 - q = \frac {\alpha X_F}{\alpha - \phi} + \frac {1 - X_F}{1 - \phi} \hspace*{0.4cm}(3)$$</p>', unsafe_allow_html=True)
     st.write(r'### <p style="text-align: center;">$$ R_{min} + 1 = \frac {\alpha X_D}{\alpha - \phi} + \frac {1 - X_D}{1 - \phi} \hspace*{0.4cm}(4)$$</p>', unsafe_allow_html=True)
-    st.write(r''' $$\hspace*{4.5cm} (3)\rightarrow \phi = $$''', round(phi_[0],3))
-    st.write(r''' $$\hspace*{4.5cm} (4)\rightarrow R_{min} = $$''', round(R_min_cal,3))
+    
+    col_R = st.columns(3)
+    with col_R[1]:
+        st.write(r''' $$(3)\rightarrow \phi = $$''', round(phi_[0],3))
+        st.write(r''' $$(4)\rightarrow R_{min} = $$''', round(R_min_cal,3))
+        
+    # st.write(r''' $$\hspace*{4.5cm} (3)\rightarrow \phi = $$''', round(phi_[0],3))
+    # st.write(r''' $$\hspace*{4.5cm} (4)\rightarrow R_{min} = $$''', round(R_min_cal,3))
     
     More_1 = st.expander("More")
     with More_1:
@@ -377,9 +482,13 @@ elif selected == "Design & Modeling":
     plt.text(0.02,ordo-0.06,'(0, $\\frac{X_{D}}{R_{min}+1}$)',horizontalalignment='center')
     st.pyplot()
     
+    col_RR = st.columns(3)
+    with col_RR[1]:
+        st.write("$\\frac{X_{D}}{R_{min}+1} =$",round(ordo,3))
+        st.write("$R_{min} =$",round(R_min,3))
     
-    st.write("$\hspace*{5.2cm} \\frac{X_{D}}{R_{min}+1} =$",round(ordo,3))
-    st.write("$\hspace*{5.2cm} R_{min} =$",round(R_min,3))
+    # st.write("$\hspace*{5.2cm} \\frac{X_{D}}{R_{min}+1} =$",round(ordo,3))
+    # st.write("$\hspace*{5.2cm} R_{min} =$",round(R_min,3))
     
     
     st.subheader("3. The actual number of trays")
@@ -403,7 +512,11 @@ elif selected == "Design & Modeling":
     
     N = fsolve(equi_sta, 0)
     N_cal = N[0]
-    st.write("$\hspace*{5.2cm} N =$",round(N_cal,3))
+    
+    col_NN = st.columns(3)
+    with col_NN[1]:
+        st.write("$N =$",round(N_cal,3))
+    # st.write("$\hspace*{5.2cm} N =$",round(N_cal,3))
     
     N_cal = int(N_cal)+1
     st.write(" Actual number of stages is", N_cal,"stages.")
@@ -559,7 +672,12 @@ elif selected == "Design & Modeling":
     st.pyplot()
     
     N =  s_rows -1
-    st.write(r''' $$\hspace*{5.2cm} N =$$''', N)
+    
+    col_NNN = st.columns(3)
+    with col_NNN[1]:
+        st.write(r''' $$N =$$''', N)
+        
+    # st.write(r''' $$\hspace*{5.2cm} N =$$''', N)
     st.write(" Actual number of stages is", N,"stages.")
     
     
@@ -584,7 +702,11 @@ elif selected == "Design & Modeling":
     D_mass = X_D*D*M_ben + (1-X_D)*D*M_tol
     B_mass = X_W*B*M_ben + (1-X_W)*B*M_tol
     
-    st.write(r''' $$\hspace*{5.2cm} \frac {N_D}{N_B} =$$''', round(rap, 2))
+    col_F = st.columns(3)
+    with col_F[1]:
+        st.write(r''' $$\frac {N_D}{N_B} =$$''', round(rap, 2))
+        
+    # st.write(r''' $$\hspace*{5.2cm} \frac {N_D}{N_B} =$$''', round(rap, 2))
     
     More_3 = st.expander("More")
     with More_3:
@@ -621,7 +743,12 @@ elif selected == "Design & Modeling":
     st.write("- **Material Streams**")
     
     df = pd.DataFrame(
-        np.array([[ str("molar flow"),  str("Kgmole/h") , round(F, 3), round(D, 3), round(B, 3)],[ str("mass flow"),  str("Kg/h") , round(F_mass, 3), round(D_mass, 3), round(B_mass, 3)],[str("mole frac (Benzene)"),  str("-") , round(X_F, 3), round(X_D, 3), round(X_W, 3)],[str("mole frac (Toluene)"),  str("-") , round(1-X_F, 3), round(1-X_D, 3), round(1-X_W, 3)]]),
+        np.array([[ str("Molar Flow"),  str("Kgmole/h") , round(F, 3), round(D, 3), round(B, 3)],
+                  [ str("Mass Flow"),  str("Kg/h") , round(F_mass, 3), round(D_mass, 3), round(B_mass, 3)],
+                  [str("Mole Frac (Benzene)"),  str("-") , round(X_F, 3), round(X_D, 3), round(X_W, 3)],
+                  [str("Mole Frac (Toluene)"),  str("-") , round(1-X_F, 3), round(1-X_D, 3), round(1-X_W, 3)],
+                  [str("Mass Frac (Benzene)"),  str("-") , round(X_F_mass, 3), round(X_D_mass, 3), round(X_W_mass, 3)],
+                  [str("Mass Frac (Toluene)"),  str("-") , round(1-X_F_mass, 3), round(1-X_D_mass, 3), round(1-X_W_mass, 3)]]),
         columns=('','Unite','Feed','Distillate','Bottoms'))
     
     hide_table_row_index = """
