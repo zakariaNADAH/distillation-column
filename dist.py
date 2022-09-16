@@ -23,14 +23,14 @@ hide_menu_style = """
     """
 st.markdown(hide_menu_style, unsafe_allow_html=True)
 
-col = st.columns(4)
-with col[0]:
-    st.image("Logo_UT3.jpg")
+# col = st.columns(4)
+# with col[0]:
+#     st.image("Logo_UT3.jpg")
     
-with col[3]:
-    st.image("ensiacet.jpg")
+# with col[3]:
+#     st.image("ensiacet.jpg")
 
-st.markdown('---')
+# st.markdown('---')
 
     
 # horizontal Menu
@@ -54,32 +54,32 @@ with st.sidebar:
     F = float(F)
     
     liste = ['Mole', 'Mass']
-    Frac = st.radio('Fraction', liste, index=1)
+    Frac = st.radio('Fraction', liste, index=0)
     st.write('<style>div.row-widget.stRadio > div{flex-direction:row;}</style>', unsafe_allow_html=True)
     
     if Frac == 'Mole':
-        X_F = st.slider("Fraction of the most volatile component in the feed (XF)",min_value=0.0, max_value=100.0, step=0.1, value=40.0)
+        X_F = st.slider("Mole Fraction of the most volatile component in the feed (XF)",min_value=0.0, max_value=100.0, step=0.1, value=40.0)
         X_F = X_F/100
         X_F_mass = X_F*M_ben/(X_F*M_ben + (1-X_F)*M_tol)
         
-        X_D = st.slider("Fraction of the most volatile component in the distillate (XD)",min_value=0.0, max_value=100.0, step=0.1, value=99.2)
+        X_D = st.slider("Mole Fraction of the most volatile component in the distillate (XD)",min_value=0.0, max_value=100.0, step=0.1, value=99.2)
         X_D = X_D/100
         X_D_mass = X_D*M_ben/(X_D*M_ben + (1-X_D)*M_tol)
         
-        X_W = st.slider("Fraction of the most volatile component in the bottom (XB)",min_value=0.0, max_value=100.0, step=0.1, value=01.4)
+        X_W = st.slider("Mole Fraction of the most volatile component in the bottom (XB)",min_value=0.0, max_value=100.0, step=0.1, value=01.4)
         X_W = X_W/100
         X_W_mass = X_W*M_ben/(X_W*M_ben + (1-X_W)*M_tol)
         
     else:
-        X_F_mass = st.slider("Fraction of the most volatile component in the feed (XF)",min_value=0.0, max_value=100.0, step=0.1, value=36.108542899408286)
+        X_F_mass = st.slider("Mass Fraction of the most volatile component in the feed (XF)",min_value=0.0, max_value=100.0, step=0.1, value=36.108542899408286)
         X_F_mass = X_F_mass/100
         X_F = X_F_mass/M_ben/(X_F_mass/M_ben + (1-X_F_mass)/M_tol)
         
-        X_D_mass = st.slider("Fraction of the most volatile component in the distillate (XD)",min_value=0.0, max_value=100.0, step=0.1, value=99.05765930507743)
+        X_D_mass = st.slider("Mass Fraction of the most volatile component in the distillate (XD)",min_value=0.0, max_value=100.0, step=0.1, value=99.05765930507743)
         X_D_mass = X_D_mass/100
         X_D = X_D_mass/M_ben/(X_D_mass/M_ben + (1-X_D_mass)/M_tol)
         
-        X_W_mass = st.slider("Fraction of the most volatile component in the bottom (XB)",min_value=0.0, max_value=100.0, step=0.1, value=01.1893598226216556)
+        X_W_mass = st.slider("Mass Fraction of the most volatile component in the bottom (XB)",min_value=0.0, max_value=100.0, step=0.1, value=01.1893598226216556)
         X_W_mass = X_W_mass/100
         X_W = X_W_mass/M_ben/(X_W_mass/M_ben + (1-X_W_mass)/M_tol)
         
@@ -175,7 +175,7 @@ elif selected == "Design & Modeling":
     st.markdown("- The actual number of trays N (or equilibrium number of trays)")
     st.markdown("- The optimum feed tray location")
     
-    st.markdown("To determine all these factors, we will use two methods: the shortcut method and the MacCabe-Thiele method.")
+    st.markdown("To determine all these factors, we will use two methods: **Shortcut Distillation Method**$$~^1$$ and **The MacCabe-Thiele Method**$$~^2$$.")
     
     # =============================================================================
     # Définir la fonction d'équilibre
@@ -222,17 +222,21 @@ elif selected == "Design & Modeling":
     x_eq, y_eq = equi(alpha)
 
     st.subheader("1. Minimum Number of Trays at Total Reflux Ratio")
-    st.write("- **Shortcut Distillation Method**$$~^1$$")
+    st.write("- **Shortcut Distillation Method**")
     st.markdown("The Fenske equation determines the minimum number of equilibrium stages, $N_{min}$, For a binary component distillation, the minimum number of theoretical trays can be expressed, such as")
     st.write(r'### <p style="text-align: center;">$$ N_{min} =\frac {ln[(X_D/(1-X_D))((1-X_B)/X_B)]}{log(\alpha)} \hspace*{0.4cm}(1)$$</p>', unsafe_allow_html=True)
     
     N_min = mt.log((X_D/(1-X_D))*((1-X_W)/X_W))/mt.log(alpha)
     Stages_min_cal = int(N_min)+1
     
-    st.write(r''' $$\hspace*{5.4cm} N_{min} =$$''', round(N_min,3))
+    col_N_min = st.columns(3)
+    with col_N_min[1]:
+        st.write(r''' $$N_{min} =$$''', round(N_min,3))
+        
+    # st.write(r''' $$\hspace*{5.4cm} N_{min} =$$''', round(N_min,3))
     st.write("The Minimum Number of Trays is", Stages_min_cal,"stages.")
     
-    st.write("- **MacCabe-Thiele Method**$$~^2$$")
+    st.write("- **MacCabe-Thiele Method**")
     
     st.markdown("The equilibrium curve determined by")
     st.write(r'### <p style="text-align: center;">$$ Y_{eq} =\frac {\alpha X_{eq}}{1 + X_{eq}(\alpha - 1)} \hspace*{0.4cm}(2)$$</p>', unsafe_allow_html=True)
@@ -494,13 +498,13 @@ elif selected == "Design & Modeling":
     st.subheader("3. The actual number of trays")
     col1 = st.columns(2)
     with col1[1]:
-        Coeff = st.slider("Select a reflux ratio Coeff",min_value=1.0, max_value=3.0, step=0.01, value=1.10)
+        Coeff = st.slider("Select a reflux ratio Coeff",min_value=1.0, max_value=3.0, step=0.01, value=1.106)
         R = Coeff*R_min
     
     with col1[0]:
         st.markdown("The actual reflux ratio, R")
         st.markdown("$R = Coeff \\times R_{min}$")
-        st.write("$R =$",round(R,3))
+        st.write("$R =$",round(R,2))
         
     
     st.write("- **Shortcut Distillation Method**")
@@ -727,8 +731,17 @@ elif selected == "Design & Modeling":
     N_min = str(Stages_min)
     
     df = pd.DataFrame(
-        np.array([[ str("Shortcut Distillation Method"),  N_min_cal,  round(R_min_cal, 4) , round(N_cal, 2), round(N_F, 2)],[ str("MacCabe-Thiele Method"),  N_min,  round(R_min, 4) , round(N, 2), round(s_f[0], 2)]]),
-        columns=('','Minimum trays','Minimum Reflux Ratio','Number of Trays','Feed tray'))
+        np.array([[ str("Reflux Ratio"),  round(R, 2),  round(R, 1)],
+                  [ str("Minimum Reflux Ratio"),  round(R_min_cal, 2),  round(R_min, 2)],
+                  [str("Minimum Reflux Ratio"),  N_min_cal,  N_min],
+                  [str("Number of Trays"), round(N_cal, 2),  round(N, 2)],
+                  [str("Feed tray"), round(N_F, 2),  round(s_f[0], 2)]]),
+        columns=('','Shortcut Distillation','MacCabe-Thiele'))
+    
+    # df = pd.DataFrame(
+    #     np.array([[ str("Shortcut Distillation Method"),  N_min_cal,  round(R_min_cal, 4) , round(N_cal, 2), round(N_F, 2)],
+    #               [ str("MacCabe-Thiele Method"),  N_min,  round(R_min, 4) , round(N, 2), round(s_f[0], 2)]]),
+    #     columns=('','Minimum trays','Minimum Reflux Ratio','Number of Trays','Feed tray'))
     
     hide_table_row_index = """
             <style>
@@ -777,20 +790,22 @@ elif selected == "Simulation":
     
     HTML_BANNER = """
         <h1 style="color:#DD985C;text-align:center;">Distillation Column Simulation</h1>
-        <p style="color:#DD985C;text-align:center;">Aspen Hysys</p>
+        <p style="color:#DD985C;text-align:center;">Aspen Hysys & DWSIM</p>
         </div>
         """
     stc.html(HTML_BANNER)
     
-    st.subheader("Aspen Hysys Rigorous Column")
-    st.write("* Fully specify the feed stream (i.e., providing feed flow rate and composition, and stream conditions, such as temperature and pressure or vapor/phase fraction and temperature or pressure)")
-    st.write("* Feed stream inlet stage: 17")
-    st.write("* Total number of trays: 28")
+    st.write(" Using Hysys and DWSIM shortcut distillation method, select Peng-Robinson (PR) as the fluid package, connect feed and product streams, distillate and product streams, condenser and reboiler energy streams, and fully specifying feed stream. While on Design/Parameters page, the following data should be made available:")
+    st.write("* LK in the bottom: Benzene with mole fraction 0.014")
+    st.write("* HK in distillate: Toluene, mole fraction 0.008")
     st.write("* Condenser and reboiler pressure: 1 atm")
     st.write("* Reflux ratio: 2")
-    st.write("* Distillate liquid rate: 3.947 kmol/h")
     
-    st.image("HYSYS_1.jpg")
+    st.subheader("Aspen Hysys Shortcut Distillation Column")
+    st.image("HYSYS_Simulation.jpg")
+    
+    st.subheader("DWSIM Shortcut Distillation Column")
+    st.image("DWSIM_Simulation.jpg")
 
 
 
