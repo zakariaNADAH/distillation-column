@@ -764,7 +764,7 @@ elif selected == "Design & Modeling":
     N_min = str(Stages_min)
     
     df = pd.DataFrame(
-        np.array([[ str("Reflux Ratio"),  round(R, 2),  round(R, 1)],
+        np.array([[ str("Reflux Ratio"),  round(R, 2),  round(R, 2)],
                   [ str("Minimum Reflux Ratio"),  round(R_min_cal, 2),  round(R_min, 2)],
                   [str("Minimum Reflux Ratio"),  round(STG,2),  N_min],
                   [str("Number of Trays"), round(STG_cal, 2),  round(N, 2)],
