@@ -767,8 +767,8 @@ elif selected == "Design & Modeling":
     df = pd.DataFrame(
         np.array([[ str("Reflux Ratio"),  round(R, 2),  round(R, 2)],
                   [ str("Minimum Reflux Ratio"),  round(R_min_cal, 2),  round(R_min, 2)],
-                  [str("Minimum Reflux Ratio"),  round(STG,2),  N_min],
-                  [str("Number of Trays"), round(STG_cal, 2),  round(N, 2)],
+                  [str("Minimum Trays"),  round(STG,2),  N_min],
+                  [str("Actual Trays"), round(STG_cal, 2),  round(N, 2)],
                   [str("Optimal Feed Stage"), round(STG_F, 2),  round(s_f[0], 2)]]),
         columns=('','Shortcut Distillation','MacCabe-Thiele'))
     
