@@ -171,20 +171,21 @@ with st.sidebar:
 # =============================================================================
 if selected == "Home":
     HTML_BANNER = """
-        <h1 style="color:#DD985C;text-align:center;">Distillation Column</h1>
-        <p style="color:#DD985C;text-align:center;">Separation of binary component</p>
+        <h1 style="color:#FF4B4B;text-align:center;">Distillation Column</h1>
+        <p style="color:#FF4B4B;text-align:center;">Separation of binary component</p>
         </div>
         """
+    #DD985C
     stc.html(HTML_BANNER)
     st.markdown("Distillation is a process in which a liquid mixture of volatile components is separated by imparting energy to it in consideration with the boiling points of the components so that selective vaporization takes place.")
     st.image("collage1.png")
     
-    st.markdown("$~~~~~~$ This application presents a model of a distillation unit. Such an application can be considered as a support tool for understanding the behavior of the process. By giving the possibility of easily studying the sensitivity to certain operating parameters (Relative volatility, Fraction of liquid in the feed, Mole fraction of the most volatile component, etc.), it provides essential information for the pre-dimensioning of such a unit.")
+    st.markdown("This application presents a model of a distillation unit. Such an application can be considered as a support tool for understanding the process behavior. By giving the possibility of easily studying the sensitivity to some operating parameters (Relative volatility, Fraction of liquid in the feed, Mole fraction of the more volatile component, etc.), it provides essential information for the pre-dimensioning of such a unit.")
     #st.markdown("This version of the application is based on This application will give an example of a Fractional Distillation process. We will present this process in a progressive way. First, we will design a distillation column by computing its height and its diameter. Then, we will give particular attention to the modeling distillation process by using material and energy balance. Finally, we will compare results obtained by our application with simulation prediction obtained with Aspen Plus and DWSIM.")
     
     st.subheader("Problem")
     st.write("A feed stream flow rate of 10 kmol/h of a saturated liquid consists of 40 mol% benzene (B) and 60% toluene (T). The desired distillate composition is 99.2 mol% of benzene and a bottom product composition with 98.6 mol% of toluene.")
-    st.write("The relative volatility, benzene/toluene (αBT), is 2.354. The reflux is saturated liquid, and the column has a total condenser and a partial reboiler. The feed is at 95°C and 1 bar.")
+    st.write("The relative volatility, benzene/toluene (αBT), is 2.354. The reflux is a saturated liquid, and the column has a total condenser and a partial reboiler. The feed is at 95°C and 1 bar.")
     
     
 # =============================================================================
@@ -198,10 +199,10 @@ elif selected == "Design & Modeling":
         """
     stc.html(HTML_BANNER)
     # st.markdown("Le dimensionnement d'une colonne de distillation consiste à déterminer son diamètre et sa hauteur. Dans cet application, on va voir les étapes clés pour déterminer **la hauteur d'une colonne de distillation** par la méthode de **MacCabe-Thiele**.")
-    st.markdown("In this section we will get intuitions on how distillation columns are designed. It is essential to know at least these factors in any distillation column design:")
+    st.markdown("In this section, we will get some insights into how distillation columns are designed. It is essential to know at least these factors in any distillation column design:")
     
     st.markdown("- The minimum number of plates required for the separation if no product or practically no product exits the column (the condition of total reflux).")
-    st.markdown("- The minimum reflux that to accomplish the design separation")
+    st.markdown("- The minimum reflux that needed to accomplish the design separation")
     st.markdown("- The actual number of trays N (or equilibrium number of trays)")
     st.markdown("- The optimum feed tray location")
     
@@ -535,7 +536,7 @@ elif selected == "Design & Modeling":
     with col1[0]:
         st.markdown("The actual reflux ratio, R")
         st.markdown("$R = Coeff \\times R_{min}$")
-        st.write("$R =$",round(R,2))
+    st.write("$R =$",round(R,2))
         
     
     st.write("- **Shortcut Distillation Method**")
@@ -822,8 +823,8 @@ elif selected == "Design & Modeling":
 elif selected == "Simulation":
     
     HTML_BANNER = """
-        <h1 style="color:#DD985C;text-align:center;">Distillation Column Simulation</h1>
-        <p style="color:#DD985C;text-align:center;">Aspen Hysys & DWSIM</p>
+        <h1 style="color:#FF4B4B;text-align:center;">Distillation Column Simulation</h1>
+        <p style="color:#FF4B4B;text-align:center;">Aspen Hysys & DWSIM</p>
         </div>
         """
     stc.html(HTML_BANNER)
