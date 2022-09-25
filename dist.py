@@ -270,7 +270,7 @@ elif selected == "Design & Modeling":
     
     st.write("- **MacCabe-Thiele Method**")
     
-    st.markdown("The equilibrium curve determined by")
+    st.markdown("The equilibrium curve")
     st.write(r'### <p style="text-align: center;">$$ Y_{eq} =\frac {\alpha X_{eq}}{1 + X_{eq}(\alpha - 1)} \hspace*{0.4cm}(2)$$</p>', unsafe_allow_html=True)
     
     # =============================================================================
@@ -853,7 +853,7 @@ Button = st.expander("Get In Touch With Me!")
 with Button:
     col31, col32, col33 = st.columns(3)
     col31.write("[Zakaria NADAH](https://www.linkedin.com/in/zakaria-nadah-00ab81160/)")
-    col31.write("Process Engineer")
+    col31.write("Chemical Process Engineer")
     col31.write("+336.28.80.13.40")
     col31.write("zakariaenadah@gmail.com")
     
